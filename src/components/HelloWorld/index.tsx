@@ -8,7 +8,7 @@ interface Params {
 }
 
 export default function HelloWorld({ parameters, onComplete }: ComponentProps) {
-    const { text = 'Hello, World!', color = '#ffffff', fontSize = 48 } = parameters as Params
+    const { text = 'Hello, World!', color = '#ffffff', fontSize = 48 } = (parameters ?? {}) as Params
 
     return (
         <div
