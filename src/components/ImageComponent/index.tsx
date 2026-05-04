@@ -23,8 +23,11 @@ function resolveImageUrl(image: MediaObject | null | undefined): string | null {
     if (contentUrl.startsWith('data:') || contentUrl.startsWith('http')) {
         return contentUrl
     }
-    const apiUrl = window.__phonyphone_config__?.apiUrl ?? ''
-    return `${apiUrl}/${contentUrl}`
+    // Supprimer le slash final de l'origin pour éviter le double slash
+    // (contentUrl commence généralement par '/' ex: '/media/xxx.jpg')
+    const apiUrl = (window.__phonyphone_config__?.apiUrl ?? '').replace(/\/$/, '')
+    const path = '/' + contentUrl.replace(/^\/+/, '')
+    return `${apiUrl}${path}`
 }
 
 export default function ImageComponent({ parameters, onComplete }: ComponentProps) {
